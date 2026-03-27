@@ -14,7 +14,7 @@ order: 3
 ## Install in Development Mode
 
 ```bash
-git clone https://github.com/example/litedocs.git
+git clone https://github.com/litestartup-com/litedocs.git
 cd litedocs
 pip install -e ".[dev]"
 ```

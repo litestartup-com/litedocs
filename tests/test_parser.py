@@ -34,7 +34,7 @@ class TestNormalizeHref:
         assert _normalize_href("api/users.md", "/en") == "/en/api/users"
 
     def test_external_url(self) -> None:
-        url = "https://github.com/example"
+        url = "https://github.com/litestartup-com/litedocs"
         assert _normalize_href(url, "/en") == url
 
     def test_absolute_path(self) -> None:
@@ -60,11 +60,11 @@ class TestParseNav:
         assert nodes[1].href == "/en/guide"
 
     def test_external_link(self) -> None:
-        content = "- [GitHub](https://github.com/example)\n"
+        content = "- [GitHub](https://github.com/litestartup-com/litedocs)\n"
         nodes = parse_nav(content, "en")
         assert len(nodes) == 1
         assert nodes[0].is_external is True
-        assert nodes[0].href == "https://github.com/example"
+        assert nodes[0].href == "https://github.com/litestartup-com/litedocs"
 
     def test_badge(self) -> None:
         content = "- [API](api/index.md) [badge:Beta]\n"
@@ -143,7 +143,7 @@ class TestParseSidebar:
         assert nodes[0].badge == "New"
 
     def test_external_link(self) -> None:
-        content = "- [GitHub](https://github.com/example)\n"
+        content = "- [GitHub](https://github.com/litestartup-com/litedocs)\n"
         nodes = parse_sidebar(content, "en")
         assert nodes[0].is_external is True
 

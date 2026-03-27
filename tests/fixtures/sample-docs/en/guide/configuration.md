@@ -24,4 +24,4 @@ LiteDocs is configured via a `config.json` file in the root of your docs directo
 
 ## Full Configuration
 
-See the [CONVENTIONS.md](https://github.com/example/litedocs) for all available options.
+See the [CONVENTIONS.md](https://github.com/litestartup-com/litedocs) for all available options.

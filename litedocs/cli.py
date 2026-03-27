@@ -97,7 +97,7 @@ def _print_startup_info(docs_paths: list[Path], host: str, port: int, bp: str) -
             typer.echo(f"     config.json and _sidebar.md were auto-generated.")
             typer.echo(
                 f"     For full features (multi-language, nav tabs), see: "
-                f"https://github.com/example/litedocs#docs-directory-structure"
+                f"https://github.com/litestartup-com/litedocs#docs-directory-structure"
             )
     if bp:
         typer.echo(f"  Base: {bp}")
