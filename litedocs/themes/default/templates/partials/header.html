@@ -1,0 +1,151 @@
+<header
+  class="sticky top-0 z-40 w-full bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm border-b border-zinc-200 dark:border-zinc-800">
+  <!-- Row 1: Logo | Search | Actions -->
+  <div class="mx-auto max-w-screen-2xl flex items-center h-14 px-4 lg:px-6 gap-4">
+    <!-- Mobile menu button -->
+    <button onclick="toggleDrawer()"
+      class="lg:hidden p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+      aria-label="Toggle menu">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Logo / Site title -->
+    <a href="{{ base_path }}/{{ doc_slug }}/{{ locale }}/"
+      class="flex items-center gap-2.5 font-semibold text-base shrink-0">
+      {% if config.site.logo %}
+      <img src="{{ base_path }}/{{ doc_slug }}/assets/{{ config.site.logo | replace('assets/', '') }}"
+        alt="{{ config.site.title }}" class="h-7 w-7">
+      {% else %}
+      <div class="h-7 w-7 rounded-lg bg-primary-500 flex items-center justify-center text-white text-sm font-bold">{{
+        config.site.title[0] | upper }}</div>
+      {% endif %}
+      <span class="hidden sm:inline">{{ config.site.title }}</span>
+    </a>
+
+    <!-- Doc switcher (multi-doc) -->
+    {% if doc_list | length > 1 %}
+    <div class="relative hidden md:block" id="doc-switcher">
+      <button onclick="toggleDocMenu()"
+        class="flex items-center gap-1.5 px-2.5 py-1.5 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+        <span>{{ config.site.title }}</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <div id="doc-menu"
+        class="hidden absolute left-0 top-full mt-1 py-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-lg min-w-[180px] z-50">
+        {% for d in doc_list %}
+        <a href="{{ base_path }}/{{ d.slug }}/{{ locale }}/"
+          class="block px-3 py-2 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors {% if d.slug == doc_slug %}font-medium text-primary-500{% else %}text-zinc-600 dark:text-zinc-400{% endif %}">
+          {{ d.title }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Search bar (center, wide) -->
+    <div class="flex-1 max-w-xl mx-auto hidden md:block">
+      <button onclick="openSearch()"
+        class="w-full flex items-center gap-3 px-4 py-2 text-sm text-zinc-400 bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/50 rounded-lg hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <span class="flex-1 text-left">Search documentation...</span>
+        <kbd
+          class="hidden lg:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-medium text-zinc-400 border border-zinc-300 dark:border-zinc-600 rounded">
+          <span class="text-xs">⌘</span>K
+        </kbd>
+      </button>
+    </div>
+
+    <!-- Right side actions -->
+    <div class="flex items-center gap-1 shrink-0">
+      <!-- Mobile search -->
+      <button onclick="openSearch()"
+        class="md:hidden p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
+        aria-label="Search">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </button>
+
+      <!-- Language switcher (hidden in flat mode) -->
+      {% if available_locales | length > 1 and not flat_mode | default(false) %}
+      <div class="relative" id="lang-switcher">
+        <button onclick="toggleLangMenu()"
+          class="flex items-center gap-1 px-2 py-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400 text-sm"
+          aria-label="Switch language">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          </svg>
+          <span class="hidden sm:inline text-xs font-medium uppercase">{{ locale }}</span>
+        </button>
+        <div id="lang-menu"
+          class="hidden absolute right-0 top-full mt-1 py-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-lg min-w-[100px] z-50">
+          {% for alt_locale in available_locales %}
+          <a href="{{ base_path }}/{{ doc_slug }}/{{ alt_locale }}/{{ page.slug }}"
+            class="block px-3 py-1.5 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors {% if alt_locale == locale %}font-medium text-primary-500{% else %}text-zinc-600 dark:text-zinc-400{% endif %}">
+            {{ alt_locale | upper }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Dark mode toggle -->
+      {% if config.theme.dark_mode %}
+      <button onclick="toggleDarkMode()"
+        class="p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-600 dark:text-zinc-400"
+        aria-label="Toggle dark mode">
+        <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </button>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Row 2: Nav Tabs -->
+  {% if nav_items %}
+  <div class="mx-auto max-w-screen-2xl border-t border-zinc-100 dark:border-zinc-800/50">
+    <nav class="flex items-center gap-0.5 px-4 lg:px-6 overflow-x-auto scrollbar-none" aria-label="Main navigation">
+      {% for item in nav_items %}
+      <a href="{{ item.href or '#' }}" {% if item.is_external %}target="_blank" rel="noopener noreferrer" {% endif %}
+        class="relative px-3 py-2.5 text-sm whitespace-nowrap transition-colors
+          {% if item.is_active %}
+            text-zinc-900 dark:text-zinc-50 font-medium
+          {% else %}
+            text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50
+          {% endif %}">
+        {{ item.label }}
+        {% if item.badge %}
+        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-primary-500/10 text-primary-500">{{
+          item.badge }}</span>
+        {% endif %}
+        {% if item.is_external %}
+        <svg class="inline-block w-3 h-3 ml-0.5 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+        {% endif %}
+        {% if item.is_active %}
+        <span class="absolute bottom-0 left-3 right-3 h-0.5 bg-primary-500 rounded-full"></span>
+        {% endif %}
+      </a>
+      {% endfor %}
+    </nav>
+  </div>
+  {% endif %}
+
+</header>

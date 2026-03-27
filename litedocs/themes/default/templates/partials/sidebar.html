@@ -1,0 +1,9 @@
+{% from "macros/sidebar_node.html" import render_sidebar_node %}
+<aside id="sidebar"
+  class="ld-sidebar hidden lg:block w-[var(--ld-sidebar-w)] shrink-0 border-r border-zinc-200 dark:border-zinc-800 sticky top-[var(--ld-header-h)] overflow-y-auto overscroll-contain">
+  <nav class="py-4 px-3 text-sm" aria-label="Sidebar navigation">
+    {% for node in sidebar %}
+    {{ render_sidebar_node(node) }}
+    {% endfor %}
+  </nav>
+</aside>

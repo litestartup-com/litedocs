@@ -1,0 +1,572 @@
+/* ============================================================
+   LiteDocs Default Theme - Custom Styles
+   Tailwind handles most styling via utility classes in templates.
+   This file covers Markdown content typography, callouts, and
+   components that cannot be expressed with Tailwind alone.
+   ============================================================ */
+
+/* ---- CSS Custom Properties (Theme) ---- */
+:root {
+  --ld-primary: #3b82f6;
+  --ld-sidebar-w: 256px;
+  --ld-toc-w: 200px;
+  --ld-header-h: 6.5rem;
+  --ld-content-max-w: 860px;
+  --ld-transition: 150ms ease;
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+}
+
+/* Hide scrollbar for nav tabs */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ---- Markdown Content Typography ---- */
+.ld-content {
+  line-height: 1.75;
+  font-size: 0.9375rem;
+}
+
+.ld-content h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.ld-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e4e4e7;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.dark .ld-content h2 {
+  border-bottom-color: #27272a;
+}
+
+.ld-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.ld-content h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ld-content h5,
+.ld-content h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.ld-content p {
+  margin-bottom: 1rem;
+}
+
+.ld-content a {
+  color: var(--ld-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--ld-transition);
+}
+
+.ld-content a:hover {
+  text-decoration-color: var(--ld-primary);
+}
+
+.ld-content strong {
+  font-weight: 600;
+}
+
+.ld-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.ld-content ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.ld-content li {
+  margin-bottom: 0.25rem;
+}
+
+.ld-content li>ul,
+.ld-content li>ol {
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+.ld-content blockquote {
+  border-left: 3px solid #d4d4d8;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: #71717a;
+}
+
+.dark .ld-content blockquote {
+  border-left-color: #3f3f46;
+  color: #a1a1aa;
+}
+
+.ld-content hr {
+  border: none;
+  border-top: 1px solid #e4e4e7;
+  margin: 2rem 0;
+}
+
+.dark .ld-content hr {
+  border-top-color: #27272a;
+}
+
+.ld-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+/* ---- Tables ---- */
+.ld-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.875rem;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.ld-content thead th {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid #e4e4e7;
+  background: #fafafa;
+}
+
+.dark .ld-content thead th {
+  border-bottom-color: #27272a;
+  background: #18181b;
+}
+
+.ld-content tbody td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.dark .ld-content tbody td {
+  border-bottom-color: #27272a;
+}
+
+.ld-content tbody tr:hover {
+  background: #fafafa;
+}
+
+.dark .ld-content tbody tr:hover {
+  background: #18181b;
+}
+
+/* ---- Inline Code ---- */
+.ld-content code:not(pre code) {
+  background: #f4f4f5;
+  color: #18181b;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.dark .ld-content code:not(pre code) {
+  background: #27272a;
+  color: #e4e4e7;
+}
+
+/* ---- Code Blocks ---- */
+.ld-content pre {
+  position: relative;
+  margin: 1.25rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid #e4e4e7;
+}
+
+.dark .ld-content pre {
+  border-color: #27272a;
+}
+
+.ld-content pre code {
+  display: block;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.ld-content pre code.hljs {
+  background: #fafafa;
+}
+
+.dark .ld-content pre code.hljs {
+  background: #18181b;
+}
+
+/* Code block language label */
+.ld-code-lang {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: #a1a1aa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+/* Code block copy button */
+.ld-code-copy {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: #a1a1aa;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--ld-transition), background var(--ld-transition);
+  border: none;
+  line-height: 1;
+}
+
+.ld-content pre:hover .ld-code-copy {
+  opacity: 1;
+}
+
+.ld-code-copy:hover {
+  background: #e4e4e7;
+  color: #18181b;
+}
+
+.dark .ld-code-copy:hover {
+  background: #3f3f46;
+  color: #e4e4e7;
+}
+
+/* ---- Task Lists ---- */
+.ld-content .task-list-item {
+  list-style: none;
+  margin-left: -1.5rem;
+}
+
+.ld-content .task-list-item input[type="checkbox"] {
+  margin-right: 0.5rem;
+  pointer-events: none;
+}
+
+/* ---- Callouts / Admonitions ---- */
+.ld-callout {
+  margin: 1.25rem 0;
+  padding: 0.875rem 1rem;
+  border-radius: 0.5rem;
+  border-left: 4px solid;
+  font-size: 0.875rem;
+}
+
+.ld-callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 600;
+  margin-bottom: 0.375rem;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.ld-callout-body p:last-child {
+  margin-bottom: 0;
+}
+
+.ld-callout--note {
+  border-left-color: #3b82f6;
+  background: #eff6ff;
+  color: #1e3a5f;
+}
+
+.ld-callout--note .ld-callout-title {
+  color: #2563eb;
+}
+
+.dark .ld-callout--note {
+  background: #172554;
+  color: #bfdbfe;
+}
+
+.dark .ld-callout--note .ld-callout-title {
+  color: #60a5fa;
+}
+
+.ld-callout--tip {
+  border-left-color: #22c55e;
+  background: #f0fdf4;
+  color: #14532d;
+}
+
+.ld-callout--tip .ld-callout-title {
+  color: #16a34a;
+}
+
+.dark .ld-callout--tip {
+  background: #052e16;
+  color: #bbf7d0;
+}
+
+.dark .ld-callout--tip .ld-callout-title {
+  color: #4ade80;
+}
+
+.ld-callout--important {
+  border-left-color: #a855f7;
+  background: #faf5ff;
+  color: #3b0764;
+}
+
+.ld-callout--important .ld-callout-title {
+  color: #9333ea;
+}
+
+.dark .ld-callout--important {
+  background: #2e1065;
+  color: #e9d5ff;
+}
+
+.dark .ld-callout--important .ld-callout-title {
+  color: #c084fc;
+}
+
+.ld-callout--warning {
+  border-left-color: #eab308;
+  background: #fefce8;
+  color: #422006;
+}
+
+.ld-callout--warning .ld-callout-title {
+  color: #ca8a04;
+}
+
+.dark .ld-callout--warning {
+  background: #422006;
+  color: #fef08a;
+}
+
+.dark .ld-callout--warning .ld-callout-title {
+  color: #facc15;
+}
+
+.ld-callout--caution {
+  border-left-color: #ef4444;
+  background: #fef2f2;
+  color: #450a0a;
+}
+
+.ld-callout--caution .ld-callout-title {
+  color: #dc2626;
+}
+
+.dark .ld-callout--caution {
+  background: #450a0a;
+  color: #fecaca;
+}
+
+.dark .ld-callout--caution .ld-callout-title {
+  color: #f87171;
+}
+
+/* ---- Callout icons (injected via JS) ---- */
+.ld-callout-icon {
+  width: 1rem;
+  height: 1rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ---- Sidebar navigation (Mintlify style) ---- */
+.ld-nav-group[data-collapsed]>.ld-nav-group-children {
+  display: none;
+}
+
+.ld-nav-group .ld-collapse-chevron {
+  transform: rotate(90deg);
+  transition: transform var(--ld-transition);
+}
+
+.ld-nav-group[data-collapsed] .ld-collapse-chevron {
+  transform: rotate(0deg);
+}
+
+.ld-nav-link.ld-nav-active {
+  background: color-mix(in srgb, var(--ld-primary) 12%, transparent);
+  color: var(--ld-primary);
+  font-weight: 500;
+}
+
+.dark .ld-nav-link.ld-nav-active {
+  background: color-mix(in srgb, var(--ld-primary) 16%, transparent);
+}
+
+/* Ensure no border or extra styles leak into sidebar links */
+.ld-nav-link {
+  border: none !important;
+  border-left: none !important;
+  margin-left: 0 !important;
+}
+
+/* ---- TOC active state ---- */
+#toc-list a.ld-toc-active {
+  color: var(--ld-primary);
+  font-weight: 500;
+}
+
+/* ---- Heading anchor hover ---- */
+.ld-content h1:hover .ld-anchor,
+.ld-content h2:hover .ld-anchor,
+.ld-content h3:hover .ld-anchor,
+.ld-content h4:hover .ld-anchor {
+  opacity: 1;
+}
+
+.ld-anchor {
+  opacity: 0;
+  margin-left: 0.25rem;
+  color: var(--ld-primary);
+  text-decoration: none;
+  transition: opacity var(--ld-transition);
+}
+
+/* ---- Smooth page transitions ---- */
+.ld-fade-in {
+  animation: ldFadeIn 150ms ease;
+}
+
+@keyframes ldFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Mobile drawer (full-height, slides from left) ---- */
+@media (max-width: 1023px) {
+  #mobile-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: none;
+  }
+
+  #mobile-drawer.ld-drawer-open {
+    display: flex;
+  }
+
+  #mobile-drawer-panel {
+    width: 280px;
+    max-width: 85vw;
+    height: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+    animation: ldSlideIn 200ms ease;
+  }
+
+  .dark #mobile-drawer-panel {
+    background: #09090b;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+  }
+
+  #mobile-drawer-backdrop {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.4);
+  }
+}
+
+@keyframes ldSlideIn {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ---- Print styles ---- */
+@media print {
+
+  header,
+  footer,
+  #sidebar,
+  aside,
+  .ld-code-copy,
+  .ld-callout-icon {
+    display: none !important;
+  }
+
+  .ld-content {
+    max-width: 100%;
+  }
+}

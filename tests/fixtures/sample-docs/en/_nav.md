@@ -1,0 +1,3 @@
+- [Guide](guide/index.md)
+- [API Reference](api/index.md) [badge:Beta]
+- [GitHub](https://github.com/example/litedocs)

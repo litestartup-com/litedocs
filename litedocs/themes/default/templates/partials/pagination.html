@@ -1,0 +1,33 @@
+{% if page.prev_page or page.next_page %}
+<nav class="flex items-center justify-between mt-12 pt-6 border-t border-zinc-200 dark:border-zinc-800" aria-label="Pagination">
+  {% if page.prev_page %}
+  <a
+    href="{{ page.prev_page.href }}"
+    hx-get="{{ page.prev_page.href }}"
+    hx-target="#content"
+    hx-swap="innerHTML"
+    hx-push-url="true"
+    class="group flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+  >
+    <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    <span>{{ page.prev_page.label }}</span>
+  </a>
+  {% else %}
+  <div></div>
+  {% endif %}
+
+  {% if page.next_page %}
+  <a
+    href="{{ page.next_page.href }}"
+    hx-get="{{ page.next_page.href }}"
+    hx-target="#content"
+    hx-swap="innerHTML"
+    hx-push-url="true"
+    class="group flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors ml-auto"
+  >
+    <span>{{ page.next_page.label }}</span>
+    <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+  </a>
+  {% endif %}
+</nav>
+{% endif %}

@@ -1,0 +1,18 @@
+{% if config.footer.copyright or config.footer.links %}
+<footer class="border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 mt-auto">
+  <div class="mx-auto max-w-screen-2xl px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-500 dark:text-zinc-400">
+    {% if config.footer.copyright %}
+    <p>{{ config.footer.copyright }}</p>
+    {% endif %}
+    {% if config.footer.links %}
+    <div class="flex items-center gap-4">
+      {% for link in config.footer.links %}
+      <a href="{{ link.href }}" class="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" {% if link.href.startswith('http') %}target="_blank" rel="noopener noreferrer"{% endif %}>
+        {{ link.label }}
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</footer>
+{% endif %}

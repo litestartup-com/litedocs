@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="{{ locale }}" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} - {{ config.site.title }}</title>
+  <meta name="description" content="{{ page.description }}">
+  {% if page.frontmatter.get('noindex') %}
+  <meta name="robots" content="noindex, nofollow">
+  {% else %}
+  <meta name="robots" content="index, follow">
+  {% endif %}
+
+  {% if config.site.url %}
+  <link rel="canonical" href="{{ config.site.url }}{{ current_path }}">
+  {% for alt_locale in available_locales %}
+  <link rel="alternate" hreflang="{{ alt_locale }}"
+    href="{{ config.site.url }}/{{ doc_slug }}/{{ alt_locale }}/{{ page.slug }}">
+  {% endfor %}
+  <link rel="alternate" hreflang="x-default"
+    href="{{ config.site.url }}/{{ doc_slug }}/{{ config.locales.default }}/{{ page.slug }}">
+  {% endif %}
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ page.title }}">
+  <meta property="og:description" content="{{ page.description }}">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="{{ locale }}">
+  {% if config.site.url %}
+  <meta property="og:url" content="{{ config.site.url }}{{ current_path }}">
+  {% endif %}
+  {% if config.seo.og_image %}
+  <meta property="og:image" content="{{ config.site.url }}/{{ config.seo.og_image }}">
+  {% endif %}
+
+  <!-- JSON-LD Structured Data -->
+  {% if config.seo.structured_data %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "{{ page.title }}",
+    "description": "{{ page.description }}",
+    "inLanguage": "{{ locale }}"
+    {% if config.site.url %}
+    ,"url": "{{ config.site.url }}{{ current_path }}"
+    {% endif %}
+  }
+  </script>
+  {% endif %}
+
+  {% if config.site.favicon %}
+  <link rel="icon" href="{{ base_path }}/{{ doc_slug }}/assets/{{ config.site.favicon | replace('assets/', '') }}">
+  {% endif %}
+
+  <!-- Tailwind CSS (Play CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '{{ config.theme.primary_color }}0d',
+              100: '{{ config.theme.primary_color }}1a',
+              200: '{{ config.theme.primary_color }}33',
+              400: '{{ config.theme.primary_color }}b3',
+              500: '{{ config.theme.primary_color }}',
+              600: '{{ config.theme.primary_color }}e6',
+              700: '{{ config.theme.primary_color }}cc',
+            }
+          },
+          maxWidth: {
+            'content': '860px',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github.min.css"
+    id="hljs-light">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+    id="hljs-dark" disabled>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/json.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/sql.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/go.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/rust.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/java.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/php.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/markdown.min.js"></script>
+
+  <!-- HTMX -->
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="{{ base_path }}/_themes/default/css/style.css">
+
+  <!-- Critical inline JS: functions used by onclick handlers must be available before body renders -->
+  <script>
+    function toggleDrawer() { var d = document.getElementById('mobile-drawer'); if (!d) return; var o = d.classList.contains('ld-drawer-open'); if (o) { d.classList.remove('ld-drawer-open'); document.body.style.overflow = '' } else { d.classList.add('ld-drawer-open'); document.body.style.overflow = 'hidden' } }
+    function toggleDarkMode() { var k = document.documentElement.classList.toggle('dark'); localStorage.setItem('ld-dark-mode', k); var l = document.getElementById('hljs-light'), d = document.getElementById('hljs-dark'); if (l && d) { l.disabled = k; d.disabled = !k } }
+    function toggleLangMenu() { var m = document.getElementById('lang-menu'); if (m) m.classList.toggle('hidden') }
+    function toggleDocMenu() { var m = document.getElementById('doc-menu'); if (m) m.classList.toggle('hidden') }
+    function openSearch() { var m = document.getElementById('search-modal'); if (m) { m.classList.remove('hidden'); var i = document.getElementById('search-input'); if (i) { i.value = ''; i.focus() } document.body.style.overflow = 'hidden' } }
+    function closeSearch() { var m = document.getElementById('search-modal'); if (m) { m.classList.add('hidden'); document.body.style.overflow = '' } }
+  </script>
+
+  <!-- Analytics -->
+  {% if config.analytics.google_analytics %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.analytics.google_analytics }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', '{{ config.analytics.google_analytics }}');
+  </script>
+  {% endif %}
+  {% if config.analytics.plausible %}
+  <script defer data-domain="{{ config.analytics.plausible }}" src="https://plausible.io/js/script.js"></script>
+  {% endif %}
+  {% for script in config.analytics.custom_head_scripts %}
+  {{ script | safe }}
+  {% endfor %}
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased min-h-screen flex flex-col">
+  {% include "partials/header.html" %}
+
+  <div class="flex flex-1 mx-auto w-full max-w-screen-2xl">
+    {% include "partials/sidebar.html" %}
+
+    <main id="main-content" class="flex-1 min-w-0">
+      <div class="flex">
+        <div id="content" class="flex-1 min-w-0 px-6 py-8 lg:px-16 lg:py-10 max-w-content mx-auto w-full">
+          {% include "partials/content.html" %}
+        </div>
+
+        {% if page.toc %}
+        {% include "partials/toc.html" %}
+        {% endif %}
+      </div>
+    </main>
+  </div>
+
+  {% include "partials/footer.html" %}
+
+  <!-- Search modal -->
+  {% include "partials/search_modal.html" %}
+
+  <!-- Mobile drawer (full-height, slides from left) -->
+  {% from "macros/sidebar_node.html" import render_sidebar_node as drawer_render_node %}
+  <div id="mobile-drawer" class="lg:hidden">
+    <div id="mobile-drawer-panel">
+      <!-- Drawer header -->
+      <div class="flex items-center justify-between h-14 px-4 border-b border-zinc-200 dark:border-zinc-800 shrink-0">
+        <a href="{{ base_path }}/{{ doc_slug }}/{{ locale }}/" class="flex items-center gap-2 font-semibold text-sm">
+          {% if config.site.logo %}
+          <img src="{{ base_path }}/{{ doc_slug }}/assets/{{ config.site.logo | replace('assets/', '') }}"
+            alt="{{ config.site.title }}" class="h-6 w-6">
+          {% else %}
+          <div class="h-6 w-6 rounded-md bg-primary-500 flex items-center justify-center text-white text-xs font-bold">
+            {{ config.site.title[0] | upper }}</div>
+          {% endif %}
+          <span>{{ config.site.title }}</span>
+        </a>
+        <button onclick="toggleDrawer()"
+          class="p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" aria-label="Close menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <!-- Drawer nav tabs -->
+      {% if nav_items %}
+      <div class="flex flex-wrap gap-1 px-3 py-2 border-b border-zinc-200 dark:border-zinc-800 shrink-0">
+        {% for item in nav_items %}
+        <a href="{{ item.href or '#' }}" {% if item.is_external %}target="_blank" rel="noopener noreferrer" {% endif %}
+          class="px-3 py-1.5 text-sm rounded-md transition-colors
+            {% if item.is_active %}
+              bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium
+            {% else %}
+              text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800
+            {% endif %}">
+          {{ item.label }}
+          {% if item.badge %}
+          <span class="ml-1 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-primary-500/10 text-primary-500">{{
+            item.badge }}</span>
+          {% endif %}
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <!-- Drawer sidebar content -->
+      <div class="flex-1 overflow-y-auto overscroll-contain">
+        <nav class="py-4 px-3 text-sm" aria-label="Mobile navigation">
+          {% for node in sidebar %}
+          {{ drawer_render_node(node) }}
+          {% endfor %}
+        </nav>
+      </div>
+    </div>
+    <div id="mobile-drawer-backdrop" onclick="toggleDrawer()"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script>window.__LD_BASE_PATH__ = '{{ base_path }}';</script>
+  <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.1/dist/umd/index.min.js"></script>
+  <script src="{{ base_path }}/_themes/default/js/app.js"></script>
+  <script src="{{ base_path }}/_themes/default/js/search.js"></script>
+  <script src="{{ base_path }}/_themes/default/js/copy-code.js"></script>
+  <script>hljs.highlightAll();</script>
+</body>
+
+</html>

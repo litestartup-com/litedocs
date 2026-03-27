@@ -1,0 +1,8 @@
+.pytest_cache
+__pycache__
+litedocs/__pycache__
+*.pyc
+litedocs.egg-info
+RULE.md
+dist
+.litedocs/

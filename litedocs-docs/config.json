@@ -1,0 +1,34 @@
+{
+  "site": {
+    "title": "LiteDocs Manual",
+    "description": "Official documentation for LiteDocs",
+    "url": "",
+    "favicon": "",
+    "logo": ""
+  },
+  "locales": {
+    "default": "en",
+    "available": [
+      "en",
+      "zh"
+    ]
+  },
+  "theme": {
+    "primary_color": "#8b5cf6",
+    "dark_mode": true
+  },
+  "seo": {
+    "auto_sitemap": true,
+    "auto_robots_txt": true,
+    "auto_llms_txt": false
+  },
+  "footer": {
+    "copyright": "© 2026 LiteDocs",
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/example/litedocs"
+      }
+    ]
+  }
+}

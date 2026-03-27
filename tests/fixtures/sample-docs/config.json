@@ -1,0 +1,36 @@
+{
+  "site": {
+    "title": "LiteDocs Sample",
+    "description": "Sample documentation site for testing LiteDocs",
+    "url": "https://docs.example.com",
+    "favicon": "assets/favicon.ico",
+    "logo": "",
+    "base_path": ""
+  },
+  "locales": {
+    "default": "en",
+    "available": [
+      "en",
+      "zh"
+    ]
+  },
+  "theme": {
+    "primary_color": "#3b82f6",
+    "dark_mode": true
+  },
+  "seo": {
+    "auto_sitemap": true,
+    "auto_robots_txt": true,
+    "auto_llms_txt": true,
+    "structured_data": true
+  },
+  "footer": {
+    "copyright": "\u00a9 2026 LiteDocs",
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/example/litedocs"
+      }
+    ]
+  }
+}
