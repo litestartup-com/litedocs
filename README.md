@@ -61,6 +61,23 @@ pip install -e .
 litedocs serve
 ```
 
+OR use a virtual environment (Recommended)
+
+```bash
+# Clone the repository
+git clone https://github.com/litestartup-com/litedocs.git
+cd litedocs
+
+# Install dependencies
+python3 -m venv myenv
+source myenv/bin/activate
+pip install -e .
+
+# Start the server (demo mode — showcases all features)
+litedocs serve
+```
+
+
 Open [http://localhost:8000](http://localhost:8000) in your browser.
 
 > **Note:** No external services required. LiteDocs ships with built-in demo docs so you can explore every feature immediately.
